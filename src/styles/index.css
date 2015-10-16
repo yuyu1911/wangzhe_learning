@@ -1,0 +1,16 @@
+:root {
+  --color: red;
+}
+
+@custom-selector :--elem1 p;
+@custom-selector :--entry :hover;
+
+:--elem1 {
+  color: var(--color);
+  transition: color 0.5s;
+}
+
+:--elem1:--entry {
+  color: color(var(--color) blackness(40%));
+  cursor: pointer;
+}
