@@ -11,12 +11,12 @@
 - css使用cssnext。
 
 ## 第二阶段、部署
-将搭建好的node服务部署到ESC上。
+将搭建好的node服务部署到ECS上。
 
 要求：
 
 - 时间：10月23号前
-- 申请ESC免费试用，网址：[http://free.aliyun.com/](http://free.aliyun.com/)
+- 申请ECS免费试用，网址：[http://free.aliyun.com/](http://free.aliyun.com/)
 - 查看相关文档完成部署。
 
 ## 第三阶段、功能开发
