@@ -26,7 +26,7 @@
 - 描述：多样展示用户输入数据。
 - 展示形式有：折线图、柱形图、区域图。
 - 代码模块化。
-- 数据：
+- 数据：[https://github.com/yuyu1911/wangzhe_learning/blob/master/data.json](https://github.com/yuyu1911/wangzhe_learning/blob/master/data.json)
 
 ## 第四阶段、总结分享
 将这次培训的经历与收获整理成PPT，准备个半小时左右的分享，到我们的周会上讲给大家听。
