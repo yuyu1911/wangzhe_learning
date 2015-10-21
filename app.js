@@ -17,7 +17,8 @@ render(app, {
 });
 
 app.use(router.routes());
-app.use(require('./routes/index')(router));
+router.get('/', require('./routes/index').index);
+router.get('/chart', require('./routes/index').chart);
 
 app.listen(3000, (err) => {
   if (err) return console.log('someting error');
