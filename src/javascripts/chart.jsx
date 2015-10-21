@@ -3,6 +3,7 @@ let React = require('react');
 let ReactDOM = require('react-dom');
 let TypeSelector = require('./chart/typeselector');
 let ChartStyle = require('../styles/chart.css');
+let WZReactHighCharts = require('./chart/highcharts');
 
 class SaveButton extends React.Component {
 
@@ -36,36 +37,48 @@ class Chart extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentValue: this.props.items[0].value
+      currentValue: this.props.initialItems[0].value,
+      drawValue: this.props.initialItems[0].value  // 主动在 draw 方法调用时才更新
     };
   }
 
-  completed(v) {
+  completed(value) {
     this.setState({
-      currentValue: v
+      currentValue: value
     });
   }
 
   draw() {
     // 根据当前的 currentValue 绘制
-    console.log(this.state.currentValue);
+    this.setState({
+      drawValue: this.state.currentValue
+    });
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    // 考虑到每次 State 的更新 都会导致 WZReactHighCharts 的重绘
+    if (nextState.drawValue === this.state.drawValue) {
+      return false;
+    }
+    return true;
   }
 
   render() {
     return (
       <div>
         <DataArea/>
-        <TypeSelector items={ this.props.items } onCompleted={ this.completed.bind(this) }/>
+        <TypeSelector items={ this.props.initialItems } onCompleted={ this.completed.bind(this) }/>
         <SaveButton onDraw={ this.draw.bind(this) }/>
+        <WZReactHighCharts type={ this.state.drawValue }></WZReactHighCharts>
       </div>
     );
   }
 };
 
 let items = [
-  {value: 'a', typeName: '折线图'},
-  {value: 'b', typeName: '柱状图'},
-  {value: 'c', typeName: '面积图'}
+  {value: 'line', typeName: '折线图'},
+  {value: 'column', typeName: '柱状图'},
+  {value: 'area', typeName: '区域图'}
 ];
 
-ReactDOM.render(<Chart items={ items }/>, document.querySelector('#container'));
+ReactDOM.render(<Chart initialItems={ items }/>, document.querySelector('#container'));

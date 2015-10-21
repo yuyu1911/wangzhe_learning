@@ -54,6 +54,7 @@
   height: auto;
   bottom: 0;
   left: 0;
+  z-index: 1000;
 }
 
 .selector-list-shell.trigger.hide {
