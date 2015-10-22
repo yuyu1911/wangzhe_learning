@@ -77,7 +77,7 @@ export default class TypeSelector extends React.Component {
     return (
       <div className='selector-shell'>
         <div className={'selector-show arrow ' + showArrowClassName } onClick={ this.listTrigger.bind(this) }>{ this.state.currentValue }</div>
-        <div className={'selector-list-shell trigger ' + listTriggerClassName}>
+        <div className={'selector-list-shell trigger ' + listTriggerClassName} ref='listshell'>
           <ul>
             { this.renderItem() }
           </ul>
@@ -87,7 +87,7 @@ export default class TypeSelector extends React.Component {
   }
 
   moveToButton() {
-    let elem = ReactDOM.findDOMNode(this).querySelector('.selector-list-shell');
+    let elem = ReactDOM.findDOMNode(this.refs.listshell);
     elem.style.marginBottom = -1 * parseInt(elem.offsetHeight, 10) + 'px';
   }
 
