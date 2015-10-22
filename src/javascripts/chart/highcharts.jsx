@@ -6,7 +6,7 @@ var ReactHighcharts = require('react-highcharts');
 
 export default class WZReactHighCharts extends React.Component {
 
-  static defaultProps = {
+  static propTypes = {
     type: React.PropTypes.string.isRequired
   }
 
