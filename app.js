@@ -19,6 +19,7 @@ render(app, {
 app.use(router.routes());
 router.get('/', require('./routes/index').index);
 router.get('/chart', require('./routes/index').chart);
+router.get('/data.json', require('./routes/index').data);
 
 app.listen(3000, (err) => {
   if (err) return console.log('someting error');
