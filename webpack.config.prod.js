@@ -2,7 +2,8 @@ var webpack = require('webpack');
 var path = require('path');
 module.exports = {
   entry: {
-    index: ['./src/javascripts/app.jsx']
+    index: ['./src/javascripts/app.jsx'],
+    chart: ['./src/javascripts/chart.jsx']
   },
   output: {
     path: path.join(__dirname, 'dist/javascripts'),
@@ -14,7 +15,7 @@ module.exports = {
       {
         test: /\.jsx$/,
         exclude: 'node_modules',
-        loader: 'babel'
+        loader: 'babel-loader?optional[]=es7.classProperties'
       },
       {
         test: /\.css$/,
@@ -23,6 +24,11 @@ module.exports = {
     ]
   },
   resolve: {
+    alias: {
+      'highcharts': 'highcharts-release/highcharts.src.js',
+      'highcharts-adapters': 'highcharts-release/adapters/standalone-framework.src.js'
+    },
+    modulesDirectories: ['node_modules'],
     extensions: ['', '.jsx', '.js']
   }
 };
