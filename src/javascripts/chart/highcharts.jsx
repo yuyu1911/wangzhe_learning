@@ -19,6 +19,9 @@ export default class WZReactHighCharts extends React.Component {
       title: {
         text: null
       },
+      xAxis: {
+        categories: this.props.seriesData.categories
+      },
       yAxis: {
         title: {
           text: null
