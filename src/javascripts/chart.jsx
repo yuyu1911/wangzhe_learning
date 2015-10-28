@@ -4,7 +4,12 @@ let ReactDOM = require('react-dom');
 let TypeSelector = require('./chart/typeselector');
 let ChartStyle = require('../styles/chart.css');
 let WZReactHighCharts = require('./chart/highcharts');
+let brace = require('brace');
+let AceEditor = require('react-ace');
 let $ = require('jquery');
+
+require('brace/mode/javascript');
+require('brace/theme/solarized_dark');
 
 class SaveButton extends React.Component {
 
@@ -26,32 +31,60 @@ class SaveButton extends React.Component {
 
 class DataArea extends React.Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: ''
+  handleChange(value) {
+    this.props.onChangeData(value);
+  }
+
+  handlePaste(value) {
+    let editor = ace.edit('brace-editor');
+    let self = this;
+    setTimeout(() => {
+      self.formatCode(value.text);
+    }, 0);
+  }
+
+  formatCode(value) {
+    let editor = ace.edit('brace-editor');
+    try {
+      let o = JSON.parse(value ? value : editor.session.getValue());
+      editor.session.setValue(JSON.stringify(o, null, 2));
+    } catch(e) {
+      // NOTING..
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps !== undefined) {
-      this.setState({
-        data: nextProps.initialData
-      });
-    }
+  componentDidUpdate() {
+    this.formatCode();
   }
 
-  handleChange(evt) {
-    this.setState({
-      data: evt.target.value
+  handleLoad() {
+    let editor = ace.edit('brace-editor');
+    editor.commands.addCommand({
+      name: 'Full Screen',
+      bindKey: {win: 'Ctrl-B', mac: 'Command-B'},
+      exec(editor) {
+        let maxLines = editor.getOption('maxLines');
+        editor.setOptions({
+          maxLines: isFinite(maxLines) ? Infinity : 30
+        });
+      }
     });
-    this.props.onChangeData(evt.target.value);
   }
 
   render() {
     return (
-      <textarea className='dataarea' placeholder='数据' value={this.state.data} onChange={this.handleChange.bind(this)}>
-      </textarea>
+      <AceEditor value={ this.props.initialData }
+                  onChange={ this.handleChange.bind(this) }
+                  onLoad={ this.handleLoad.bind(this) }
+                  onPaste={ this.handlePaste.bind(this) }
+                  mode='javascript'
+                  theme='solarized_dark'
+                  editorProps={{$blockScrolling: Infinity}}
+                  width='100%'
+                  showGutter={ false }
+                  maxLines={ 30 }
+                  tabSize={ 2 }>
+      </AceEditor>
     );
   }
 };

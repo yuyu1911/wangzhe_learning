@@ -4,6 +4,11 @@
   --bgcolor: #d8d8d8;
 }
 
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
 .selector-shell {
   position: relative;
   min-height: 40px;
