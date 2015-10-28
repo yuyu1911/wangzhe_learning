@@ -11,89 +11,38 @@ html, body {
 
 .selector-shell {
   position: relative;
-  min-height: 40px;
+  display: inline-block;
 }
 
-.selector-show {
+.selector {
   position: relative;
-  width: var(--selector-width);
-  height: 40px;
-  border:2px solid var(--gray-color);
-  box-sizing: border-box;
-  line-height: 40px;
-  padding-left: 5px;
-  color: var(--gray-color);
-  font-weight: bold;
-  font-size: 18px;
-}
-
-.selector-show:hover {
+  display: inline-block;
+  padding: 10px;
+  padding-left: 10px;
+  padding-right: 70px;
+  margin: 0;
+  font-size: 13px;
+  outline:none; /* remove focus ring from Webkit */
+  line-height: 1.2;
+  background: #ffffff;
+  border: 2px solid var(--gray-color);
+  color:var(--gray-color);
+  -webkit-appearance: none;
+  -webkit-border-radius: 0px;
   cursor: pointer;
 }
 
-.selector-show.arrow:after {
-  content: '';
+.selector-shell .arrow {
   position: absolute;
   right: 0;
+  top: 50%;
+  margin-top: -6px;
+  margin-right: 10px;
   width: 0;
   height: 0;
   border-style: solid;
-  top: 50%;
-  margin-top: -4px;
-  margin-right: 5px;
-}
-
-.selector-show.arrow.down:after {
-  border-width: 8px 5px 0 5px;
+  border-width: 12px 5px 0 5px;
   border-color: var(--gray-color) transparent transparent transparent;
-}
-
-.selector-show.arrow.up:after {
-  border-width: 0 5px 8px 5px;
-  border-color: transparent transparent var(--gray-color) transparent;
-}
-
-.selector-list-shell {
-  position: absolute;
-  width: var(--selector-width);
-  height: auto;
-  bottom: 0;
-  left: 0;
-  z-index: 1000;
-}
-
-.selector-list-shell.trigger.hide {
-  display: none;
-}
-
-@custom-selector :--selector-list ul;
-
-.selector-shell :--selector-list {
-  list-style: none;
-  padding:0;margin: 0;
-  width: var(--selector-width);
-  box-sizing: border-box;
-  background-color: #ccc;
-}
-
-@custom-selector :--selector-item .selector-shell ul li;
-
-:--selector-item {
-  padding: 10px 5px;
-}
-
-:--selector-item:nth-child(2n+1) {
-  background-color: var(--bgcolor);
-}
-
-:--selector-item:nth-child(2n) {
-  background-color: var(--gray-color);
-}
-
-:--selector-item a {
-  color: black;
-  text-decoration: none;
-  font-weight: bold;
 }
 
 .savebutton {
