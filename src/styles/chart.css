@@ -66,3 +66,7 @@ html, body {
   outline: none;
   border: 2px solid var(--gray-color);
 }
+
+.CodeMirror {
+  height: 500px;
+}

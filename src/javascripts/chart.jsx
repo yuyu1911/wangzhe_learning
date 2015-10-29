@@ -2,14 +2,14 @@
 let React = require('react');
 let ReactDOM = require('react-dom');
 let TypeSelector = require('./chart/typeselector');
-let ChartStyle = require('../styles/chart.css');
 let WZReactHighCharts = require('./chart/highcharts');
-let brace = require('brace');
-let AceEditor = require('react-ace');
+let ReactCodeMirror = require('./react-codemirror');
 let $ = require('jquery');
 
-require('brace/mode/javascript');
-require('brace/theme/solarized_dark');
+require('codemirror/mode/javascript/javascript');
+require('codemirror-theme-base');
+require('codemirror-theme-ambiance');
+require('../styles/chart.css');
 
 class SaveButton extends React.Component {
 
@@ -35,56 +35,30 @@ class DataArea extends React.Component {
     this.props.onChangeData(value);
   }
 
-  handlePaste(value) {
-    let editor = ace.edit('brace-editor');
-    let self = this;
-    setTimeout(() => {
-      self.formatCode(value.text);
-    }, 0);
-  }
-
-  formatCode(value) {
-    let editor = ace.edit('brace-editor');
+  handlePaste(value, cm) {
     try {
-      let o = JSON.parse(value ? value : editor.session.getValue());
-      editor.session.setValue(JSON.stringify(o, null, 2));
+      let o = JSON.parse(value);
+      cm.setValue(JSON.stringify(o, null, 2));
     } catch(e) {
-      // NOTING..
+      // nothing..
     }
   }
 
-  componentDidUpdate() {
-    this.formatCode();
-  }
-
-  handleLoad() {
-    let editor = ace.edit('brace-editor');
-    editor.commands.addCommand({
-      name: 'Full Screen',
-      bindKey: {win: 'Ctrl-B', mac: 'Command-B'},
-      exec(editor) {
-        let maxLines = editor.getOption('maxLines');
-        editor.setOptions({
-          maxLines: isFinite(maxLines) ? Infinity : 30
-        });
-      }
-    });
-  }
-
   render() {
+    let options = {
+      lineNumbers: false,
+      theme: 'ambiance',
+      mode: 'javascript',
+      viewportMargin: Infinity,
+      height: '500px'
+    };
     return (
-      <AceEditor value={ this.props.initialData }
-                  onChange={ this.handleChange.bind(this) }
-                  onLoad={ this.handleLoad.bind(this) }
-                  onPaste={ this.handlePaste.bind(this) }
-                  mode='javascript'
-                  theme='solarized_dark'
-                  editorProps={{$blockScrolling: Infinity}}
-                  width='100%'
-                  showGutter={ false }
-                  maxLines={ 30 }
-                  tabSize={ 2 }>
-      </AceEditor>
+      <ReactCodeMirror value={ this.props.initialData }
+                       options={ options }
+                       onChange={ this.handleChange.bind(this) }
+                       onPaste={ this.handlePaste.bind(this) }
+                      >
+      </ReactCodeMirror>
     );
   }
 };
@@ -154,7 +128,7 @@ class Chart extends React.Component {
     .success(function(returnData) {
       self.setState({
         drawData: returnData,
-        currentData: JSON.stringify(returnData)
+        currentData: JSON.stringify(returnData, null, 2)
       });
     })
     .error(function(xhr, textStatus, error) {

@@ -26,7 +26,9 @@ module.exports = {
   resolve: {
     alias: {
       'highcharts': 'highcharts-release/highcharts.src.js',
-      'highcharts-adapters': 'highcharts-release/adapters/standalone-framework.src.js'
+      'highcharts-adapters': 'highcharts-release/adapters/standalone-framework.src.js',
+      'codemirror-theme-ambiance': 'codemirror/theme/ambiance.css',
+      'codemirror-theme-base': 'codemirror/lib/codemirror.css'
     },
     modulesDirectories: ['node_modules'],
     extensions: ['', '.jsx', '.js']

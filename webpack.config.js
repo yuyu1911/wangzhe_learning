@@ -1,5 +1,6 @@
 var webpack = require('webpack');
 var path = require('path');
+
 module.exports = {
   entry: {
     index: [
@@ -16,10 +17,13 @@ module.exports = {
 
   output: {
     path: path.join(__dirname, 'dist/javascripts'),
-    publicPath: '/javascripts',
+    publicPath: 'http://127.0.0.1:8080/javascripts',
     filename: '[name].bundle.js'
   },
   plugins: [
+    new webpack.DefinePlugin({
+        'process.env.NODE_ENV': '"development"'
+    }),
     new webpack.HotModuleReplacementPlugin()
   ],
   module: {
@@ -38,7 +42,9 @@ module.exports = {
   resolve: {
     alias: {
       'highcharts': 'highcharts-release/highcharts.src.js',
-      'highcharts-adapters': 'highcharts-release/adapters/standalone-framework.src.js'
+      'highcharts-adapters': 'highcharts-release/adapters/standalone-framework.src.js',
+      'codemirror-theme-ambiance': 'codemirror/theme/ambiance.css',
+      'codemirror-theme-base': 'codemirror/lib/codemirror.css'
     },
     modulesDirectories: ['node_modules'],
     extensions: ['', '.jsx', '.js']
